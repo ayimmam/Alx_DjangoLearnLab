@@ -1,6 +1,6 @@
 from bookshelf.models import Book
-book_to_delete = Book.objects.get(title='Nineteen Eighty-Four')
-book_to_delete.delete()
+book = Book.objects.get(title='Nineteen Eighty-Four')
+book.delete()
 
 # Confirm deletion by trying to retrieve the book again.
 try:
@@ -11,8 +11,8 @@ except Book.DoesNotExist:
 Expected Output
 The expected output shows the confirmation message, indicating that the DoesNotExist exception was caught, which means the book was successfully removed from the database.
 
->>> book_to_delete = Book.objects.get(title='Nineteen Eighty-Four')
->>> book_to_delete.delete()
+>>> book = Book.objects.get(title='Nineteen Eighty-Four')
+>>> book.delete()
 (1, {'bookshelf.Book': 1})
 >>> try:
 ...     Book.objects.get(title='Nineteen Eighty-Four')
