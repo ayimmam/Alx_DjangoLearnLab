@@ -8,7 +8,7 @@ book2, created = Book.objects.get_or_create(title="Harry Potter and the Chamber 
 author2, created = Author.objects.get_or_create(name="George Orwell")
 book3, created = Book.objects.get_or_create(title="1984", author=author2)
 
-library1, created = Library.objects.get_or_create(name="Central Library")
+library1, created = Library.objects.get_or_create(name="Library_name")
 library1.books.add(book1, book3)
 
 librarian1, created = Librarian.objects.get_or_create(name="Jane Doe", library=library1)
@@ -21,12 +21,12 @@ print("-" * 20)
 
 print("--- Query 2: All books in a library ---")
 # Use the Many-to-Many relationship
-for book in Library.objects.get(name="Central Library").books.all():
+for book in Library.objects.get(name="Library_name").books.all():
     print(book.title)
 print("-" * 20)
 
 print("--- Query 3: The librarian for a specific library ---")
 # Use the reverse One-to-One relationship
-librarian_name = Library.objects.get(name="Central Library").librarian.name
+librarian_name = Library.objects.get(name="Library_name").librarian.name
 print(f"The librarian is {librarian_name}")
 print("-" * 20)
