@@ -27,6 +27,6 @@ print("-" * 20)
 
 print("--- Query 3: The librarian for a specific library ---")
 # Use the reverse One-to-One relationship
-librarian_name = Library.objects.get(name="Library_name").librarian.name
+librarian_name = Library.objects.get(name="Library_name")
 print(f"The librarian is {librarian_name}")
 print("-" * 20)
