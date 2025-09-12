@@ -4,7 +4,7 @@ from .models import Book, Author
 from .models import Library
 from django.views.generic.detail import DetailView
 
-def library_view(request):
+def list_books(request):
    
     books = Book.objects.all()  # Fetch all book instances from the database
     authors = Author.objects.all()  # Fetch all author instances from the database
