@@ -1,11 +1,13 @@
 from relationship_app.models import Author, Book, Library, Librarian
 
 Library_name = 'Central Library'
-
+Author_name = 'J.K. Rowling'
+Book_title = 'Harry Potter and the Sorcerer\'s Stone'
+Librarian_name = 'Jane Doe'
 # Sample Data 
-author1, created = Author.objects.get_or_create(name="J.K. Rowling")
-book1, created = Book.objects.get_or_create(title="Harry Potter and the Sorcerer's Stone", author=author1)
-book2, created = Book.objects.get_or_create(title="Harry Potter and the Chamber of Secrets", author=author1)
+author1, created = Author.objects.get_or_create(name=Author_name)
+book1, created = Book.objects.get_or_create(title=Book_title, author=author1)
+book2, created = Book.objects.get_or_create(title=Book_title, author=author1)
 
 author2, created = Author.objects.get_or_create(name="George Orwell")
 book3, created = Book.objects.get_or_create(title="1984", author=author2)
@@ -13,10 +15,10 @@ book3, created = Book.objects.get_or_create(title="1984", author=author2)
 library1, created = Library.objects.get_or_create(name=Library_name)
 library1.books.add(book1, book3)
 
-librarian1, created = Librarian.objects.get_or_create(name="Jane Doe", library=library1)
+librarian1, created = Librarian.objects.get_or_create(name=Librarian_name, library=library1)
 print("--- Query 1: All books by a specific author ---")
 # Use the reverse relationship from Author to Book
-for book in Author.objects.get(name="J.K. Rowling").books.all():
+for book in Library.objects.get(name="J.K. Rowling").books.all():
     print(book.title)
 print("-" * 20)
 
