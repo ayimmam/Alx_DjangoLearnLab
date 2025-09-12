@@ -1,39 +1,63 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-from .models import Book, Author 
-from .models import Library
-from django.views.generic.detail import DetailView
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import DetailView
+from django.contrib.auth.decorators import user_passes_test
+from .models import Book, Library, UserProfile
 
-def list_books(request):
-   
-    books = Book.objects.all()  # Fetch all book instances from the database
-    authors = Author.objects.all()  # Fetch all author instances from the database
-    context = {'book_list': books, 'author_list': authors}  # Create a context dictionary with book and author lists
-    return render(request, 'relationship_app/list_books.html', context)
-class LibraryDetailView(DetailView):
-    model = Library
-    template_name = 'relationship_app/library_detail.html'
-    context_object_name = 'library'
-    
-# Custom registration view
+# Helper functions for the @user_passes_test decorator
+def is_admin(user):
+    """Checks if the user has the 'Admin' role."""
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'Admin'
+
+def is_librarian(user):
+    """Checks if the user has the 'Librarian' role."""
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'Librarian'
+
+def is_member(user):
+    """Checks if the user has the 'Member' role."""
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'Member'
+
+# Role-specific views
+@user_passes_test(is_admin)
+def admin_view(request):
+    """View only accessible to Admin users."""
+    return render(request, 'relationship_app/admin_view.html')
+
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    """View only accessible to Librarian users."""
+    return render(request, 'relationship_app/librarian_view.html')
+
+@user_passes_test(is_member)
+def member_view(request):
+    """View only accessible to Member users."""
+    return render(request, 'relationship_app/member_view.html')
+
+# Existing views (included for completeness)
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('book_list')  # Redirect to a home page or book list after registration
+            return redirect('member_view')
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-# Use Django's built-in views for login and logout
 class UserLoginView(LoginView):
     template_name = 'relationship_app/login.html'
 
 class UserLogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
+
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'relationship_app/book_list.html', {'books': books})
+
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'
+    context_object_name = 'library'

@@ -8,5 +8,8 @@ urlpatterns = [
      path('register/', views.register, name='register'),
     path('login/', UserLoginView.as_view(template_name='relationship_app/login.html'), name='login'),
     path('logout/', UserLogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
-
+    # Role-based views
+    path('admin_dashboard/', views.admin_view, name='admin_view'),
+    path('librarian_dashboard/', views.librarian_view, name='librarian_view'),
+    path('member_dashboard/', views.member_view, name='member_view'),
 ]
