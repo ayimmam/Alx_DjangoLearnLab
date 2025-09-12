@@ -2,8 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Book, Author 
 from .models import Library
-from django.views.generic import DetailView
-
+from django.views.generic.detail import DetailView
 
 def library_view(request):
    
