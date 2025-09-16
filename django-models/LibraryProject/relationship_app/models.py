@@ -41,6 +41,3 @@ def save_user_profile(sender, instance, **kwargs):
     """Signal to save the UserProfile whenever the User instance is saved."""
     if hasattr(instance, 'profile'):
         instance.profile.save()
-
-def __str__(self):
-    return self.name
