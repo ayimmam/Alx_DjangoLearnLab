@@ -17,10 +17,9 @@ library1.books.add(book1, book3)
 
 librarian1, created = Librarian.objects.get_or_create(name=Librarian_name, library=library1)
 print("--- Query 1: All books by a specific author ---")
-authors = Author.objects.filter(name=author_name)
-for author in authors:
-    for book in Book.objects.filter(author=author):
-        print(book.title)
+authors = Author.objects.get(name=author_name)
+for book in Book.objects.filter(book=authors):
+    print(book.title)
 print("-" * 20)
 
 for book in Library.objects.get(name="J.K. Rowling").books.all():
