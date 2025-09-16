@@ -47,7 +47,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-class UserLoginView(LoginView):
+class UseLoginView(LoginView):
     template_name = 'relationship_app/login.html'
 
 class UserLogoutView(LogoutView):
