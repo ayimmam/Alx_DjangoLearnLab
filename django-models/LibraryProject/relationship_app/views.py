@@ -4,8 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import user_passes_test
-from .models import Book, Library, UserProfile
-
+from .models import Book, UserProfile
+from .models import Library
 # Helper functions for the @user_passes_test decorator
 def is_admin(user):
     """Checks if the user has the 'Admin' role."""
