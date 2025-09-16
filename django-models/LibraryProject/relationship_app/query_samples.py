@@ -15,7 +15,7 @@ book3, created = Book.objects.get_or_create(title="1984", author=author2)
 library1, created = Library.objects.get_or_create(name=library_name)
 library1.books.add(book1, book3)
 
-librarian1, created = Librarian.objects.get_or_create(name=Librarian_name, library=library1)
+created, librarian1 = Librarian.objects.get(library="Central Library", name=Librarian_name)
 print("--- Query 1: All books by a specific author ---")
 authors = Author.objects.get(name=author_name)
 for author in authors:
